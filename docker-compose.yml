@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      MONGO_URL: ${MONGO_URL}
+      MONGO_PORT: ${MONGO_PORT}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+      MODEL_ENGINE: ${MODEL_ENGINE}
+      MODEL_TEMPERATURE: ${MODEL_TEMPERATURE}
+      MODEL_TOKENS: ${MODEL_TOKENS}
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+  db:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+    volumes:
+      - ./data/db:/data/db
+volumes:
+  db-gpt:
