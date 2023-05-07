@@ -128,7 +128,7 @@ def reset_context(chat_id: int) -> None:
 # Handle bot errors
 def handle_error(message: types.Message) -> None:
     traceback.print_exc()
-    bot.reply_to(message, 'An error occurred. Please try again later.')
+    bot.reply_to(message, 'Ошибка. Пожалуйста, попробуйте еще раз.')
 
 
 if __name__ == '__main__':
