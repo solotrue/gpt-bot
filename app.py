@@ -32,7 +32,6 @@ def handle_message(message: types.Message) -> None:
     try:
         chat_id = message.chat.id
         message_text = message.text 
-        print(f"db user: {MONGO_USERNAME}, db password: {MONGO_PASSWORD}, db database: {MONGO_DATABASE}, db url: {db}")
         response = generate_response(chat_id, message_text)
         save_context(chat_id, message_text, response)
 
@@ -128,6 +127,7 @@ def reset_context(chat_id: int) -> None:
 
 # Handle bot errors
 def handle_error(message: types.Message) -> None:
+    print(f"db user: {MONGO_USERNAME}, db password: {MONGO_PASSWORD}, db database: {MONGO_DATABASE}, db url: {db}")
     traceback.print_exc()
     bot.reply_to(message, 'An error occurred. Please try again later.')
 
