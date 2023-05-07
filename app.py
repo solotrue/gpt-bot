@@ -10,8 +10,8 @@ import openai
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 MODEL_ENGINE = os.environ.get('MODEL_ENGINE', 'text-davinci-002')
-MODEL_TOKENS = os.environ.get('MODEL_TOKENS', '150')
-MODEL_TEMPERATURE = os.environ.get('MODEL_TEMPERATURE', '0.5')
+MODEL_TOKENS = int(os.environ.get('MODEL_TOKENS', '150'))
+MODEL_TEMPERATURE = float(os.environ.get('MODEL_TEMPERATURE', '0.5'))
 MONGO_USERNAME = os.environ.get('MONGO_USERNAME', 'root')
 MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', 'root')
 MONGO_DATABASE = os.environ.get('MONGO_DATABASE', 'test')
@@ -127,7 +127,6 @@ def reset_context(chat_id: int) -> None:
 
 # Handle bot errors
 def handle_error(message: types.Message) -> None:
-    print(f"db user: {MONGO_USERNAME}, db password: {MONGO_PASSWORD}, db database: {MONGO_DATABASE}, db url: {db}")
     traceback.print_exc()
     bot.reply_to(message, 'An error occurred. Please try again later.')
 
