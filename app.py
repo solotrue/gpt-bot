@@ -9,14 +9,20 @@ import openai
 # Load environment variables
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
-MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost')
-print(os.environ.get('MONGO_PORT'))
-MONGO_PORT = int(os.environ.get('MONGO_PORT', '27017'))
-MONGO_DBNAME = os.environ.get('MONGO_DBNAME', 'test')
+MODEL_ENGINE = os.environ.get('MODEL_ENGINE', 'text-davinci-002')
+MODEL_TOKENS = os.environ.get('MODEL_TOKENS', '150')
+MODEL_TEMPERATURE = os.environ.get('MODEL_TEMPERATURE', '0.5')
 MONGO_USERNAME = os.environ.get('MONGO_USERNAME', 'root')
 MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', 'root')
-MODEL_ENGINE = os.environ.get('MODEL_ENGINE', 'text-davinci-002')
+MONGO_DBNAME = os.environ.get('MONGO_DBNAME', 'test')
+MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost')
+# MONGO_PORT = int(os.environ.get('MONGO_PORT', '27017'))
 
+mongo_port_str = os.environ.get('MONGO_PORT', '27017')
+if mongo_port_str:
+    MONGO_PORT = int(mongo_port_str)
+else:
+    MONGO_PORT = 27017
 
 openai.api_key = OPENAI_API_KEY
 
@@ -76,8 +82,8 @@ def generate_response(chat_id: int, message_text: str) -> str:
         response = openai.Completion.create(
             engine=MODEL_ENGINE, 
             prompt=prompt,
-            max_tokens=150,
-            temperature=0.7,
+            max_tokens=MODEL_TOKENS,
+            temperature=MODEL_TEMPERATURE,
         )
 
         text = response.choices[0].text.strip()
