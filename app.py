@@ -120,7 +120,10 @@ def save_context(chat_id: int, message_text: str, response: str) -> None:
 def reset_context(chat_id: int) -> None:
     try:
         collection = db.contexts
-        collection.delete_one({'chat_id': chat_id})
+        update_result = collection.update_one({'chat_id': chat_id}, {'$set': {'chat_id': 'reset_' + str(chat_id)}})
+        
+        if update_result.modified_count == 0:
+            raise ValueError("No conversation context found with given chat_id.")
 
     except Exception as e:
         raise ValueError("Failed to reset conversation context.")
