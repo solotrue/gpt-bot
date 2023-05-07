@@ -99,22 +99,21 @@ def save_context(chat_id: int, message_text: str, response: str) -> None:
 
         document = collection.find_one({'chat_id': chat_id})
 
-        if not document:
-            # Create a new document for this chat_id
-            document = {'chat_id': chat_id, 'context': [{'message': message_text, 'response': response}]}
-            collection.insert_one(document)
-        else:
+        context_items = [{'message': message_text, 'response': response}]
+        if document:
             # Append this message and response to the existing context
             context_items = document['context']
             if isinstance(context_items, str):
                 # Convert string to list of dictionaries
                 context_items = [{'message': context_items, 'response': ''}]
             context_items.append({'message': message_text, 'response': response})
-            document['context'] = context_items
-            collection.update_one({'chat_id': chat_id}, {'$set': document})
+
+        document = {'chat_id': chat_id, 'context': context_items}
+        collection.replace_one({'chat_id': chat_id}, document, upsert=True)
 
     except Exception as e:
         raise ValueError("Failed to save conversation context.")
+
 
 # Reset conversation context in database
 def reset_context(chat_id: int) -> None:
