@@ -14,25 +14,17 @@ MODEL_TOKENS = os.environ.get('MODEL_TOKENS', '150')
 MODEL_TEMPERATURE = os.environ.get('MODEL_TEMPERATURE', '0.5')
 MONGO_USERNAME = os.environ.get('MONGO_USERNAME', 'root')
 MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', 'root')
-MONGO_DBNAME = os.environ.get('MONGO_DBNAME', 'test')
-# MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost')
-MONGO_URL = "mongodb://root:root@db:27017/prod"
-# MONGO_PORT = int(os.environ.get('MONGO_PORT', '27017'))
-
-mongo_port_str = os.environ.get('MONGO_PORT', '27017')
-if mongo_port_str:
-    MONGO_PORT = int(mongo_port_str)
-else:
-    MONGO_PORT = 27017
+MONGO_DATABASE = os.environ.get('MONGO_DATABASE', 'test')
+MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost')
+MONGO_PORT = int(os.environ.get('MONGO_PORT', '27017'))
 
 openai.api_key = OPENAI_API_KEY
 
 app = Flask(__name__)
 bot = TeleBot(BOT_TOKEN)
-# mongo_client = pymongo.MongoClient(MONGO_URL, MONGO_PORT, username=MONGO_USERNAME, password=MONGO_PASSWORD)
-mongo_client = pymongo.MongoClient(MONGO_URL)
+mongo_client = pymongo.MongoClient(MONGO_URL, MONGO_PORT, username=MONGO_USERNAME, password=MONGO_PASSWORD)
 
-db = mongo_client[MONGO_DBNAME]
+db = mongo_client[MONGO_DATABASE]
 
 # Handle incoming messages
 @bot.message_handler(func=lambda message: True)
