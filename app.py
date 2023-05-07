@@ -10,11 +10,12 @@ import openai
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost')
+print(os.environ.get('MONGO_PORT'))
 MONGO_PORT = int(os.environ.get('MONGO_PORT', '27017'))
 MONGO_DBNAME = os.environ.get('MONGO_DBNAME', 'test')
 MONGO_USERNAME = os.environ.get('MONGO_USERNAME', 'root')
 MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', 'root')
-MODEL_ENGINE = os.environ.get('MODEL_ENGINE', 'text-davinci-003')
+MODEL_ENGINE = os.environ.get('MODEL_ENGINE', 'text-davinci-002')
 
 
 openai.api_key = OPENAI_API_KEY
