@@ -2,3 +2,7 @@
 /dc-db.yml
 /start.sh
 /data/
+/venv/
+.idea
+
+
