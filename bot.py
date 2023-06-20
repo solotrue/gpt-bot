@@ -18,7 +18,7 @@ dp = Dispatcher(bot, storage=storage)
 
 @dp.message_handler(Command("start"))
 async def start(message: types.Message, state: FSMContext = None):
-    await message.answer("Готов к работе")
+    await message.answer("Работаем!")
 
 
 @dp.message_handler()
