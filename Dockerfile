@@ -12,4 +12,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the app files into the container
 COPY . .
 
+# Run the app
 CMD [ "python", "bot.py" ]
